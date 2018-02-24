@@ -13,9 +13,6 @@ public class MatrixGame {
     private static final int[] moves = {0, 3, 6, 9};
     public static int count_mix;
 
-
-
-
     public static int getCount_moves() {
         return count_moves;
     }
@@ -27,22 +24,6 @@ public class MatrixGame {
     public MatrixGame() {
         matrix = new int[size.x][size.y];
         matrix_original = new int[size.x][size.y];
-        count = 0;
-        for (int y = 0; y < size.y; y++) {
-            for (int x = 0; x < size.x; x++) {
-                count++;
-                setMatrix(new Coord(x,y), count);
-                matrix_original [x][y] = count;
-                if (count >= size.x * size.y) {
-                    setMatrix(new Coord(x,y), 0);
-                    matrix_original [x][y] = 0;
-
-                    zero = new Coord(x, y);
-                }
-            }
-        }
-        //matrix_original = matrix;
-
     }
 
 
@@ -91,7 +72,7 @@ public class MatrixGame {
         setCount_moves();
     }
 
-    private static boolean gameOver() {
+    public static boolean gameOver() {
         if (Arrays.deepEquals(matrix, matrix_original)) {
             return true;
         }
@@ -100,25 +81,25 @@ public class MatrixGame {
 
     public static void moveKeyboard(int key, boolean setting) {
         if (gameOver() && setting) return;
-        if (key == 0) {
+        if (key == 6) {
             if (zero.y - 1 >= 0) {
                 moveMatrix(new Coord(zero.x, zero.y - 1), new Coord(zero.x, zero.y));
             }
         }
 
-        if (key == 6) {
+        if (key == 0) {
             if (zero.y + 1 < size.y) {
                 moveMatrix(new Coord(zero.x, zero.y + 1), new Coord(zero.x, zero.y));
             }
         }
 
-        if (key == 3) {
+        if (key == 9) {
             if (zero.x + 1 < size.x) {
                 moveMatrix(new Coord(zero.x + 1, zero.y), new Coord(zero.x, zero.y));
             }
         }
 
-        if (key == 9) {
+        if (key == 3) {
             if (zero.x - 1 >= 0) {
                 moveMatrix(new Coord(zero.x - 1, zero.y), new Coord(zero.x, zero.y));
             }
@@ -126,6 +107,20 @@ public class MatrixGame {
     }
 
     public static void mixStart() {
+        count = 0;
+        for (int y = 0; y < size.y; y++) {
+            for (int x = 0; x < size.x; x++) {
+                count++;
+                setMatrix(new Coord(x,y), count);
+                matrix_original [x][y] = count;
+                if (count >= size.x * size.y) {
+                    setMatrix(new Coord(x,y), 0);
+                    matrix_original [x][y] = 0;
+
+                    zero = new Coord(x, y);
+                }
+            }
+        }
         for (int ii = 0; ii < 300; ii++) {
             int t = (int) (Math.random() * 4);
             if (t > 3) t = 3;

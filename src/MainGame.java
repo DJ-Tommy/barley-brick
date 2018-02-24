@@ -9,6 +9,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+//import static java.awt.Event.*;
+
 public class MainGame extends JFrame
 
 {
@@ -21,7 +23,7 @@ public class MainGame extends JFrame
     private final String TITLE = "15 puzler's";
     private final static int ROWS = 4;
     private final static int COLS = 4;
-    private final int SIZE_BLOCK = 70;
+    private final int SIZE_BLOCK = 110;
 
     public static void main(String[] args)
     {
@@ -96,22 +98,7 @@ public class MainGame extends JFrame
                 menuPanel.repaint();
             }
         });
-        gamePanel.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
 
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
         gamePanel.setPreferredSize(new Dimension(COLS * SIZE_BLOCK, ROWS * SIZE_BLOCK));
         gamePanel.setBackground(Color.gray);
         gamePanel.setBorder(new BevelBorder(0));
@@ -129,7 +116,8 @@ public class MainGame extends JFrame
                 Font font = new Font("Tahoma", Font.BOLD, SIZE_BLOCK / 5);
                 gm.setFont(font);
                 gm.drawString("Количество ходов: " + String.valueOf(MatrixGame.getCount_moves()), SIZE_BLOCK / 6, SIZE_BLOCK / 3);
-                gm.drawString("Случайных ходов: " + String.valueOf(MatrixGame.count_mix), SIZE_BLOCK / 6, SIZE_BLOCK / 3 * 2);
+                if (MatrixGame.gameOver())
+                gm.drawString("УРА !!! ПОБЕДА !!! ", SIZE_BLOCK / 6, SIZE_BLOCK / 3 * 2);
             }
 
         };
@@ -141,6 +129,39 @@ public class MainGame extends JFrame
 
     private void initFrame ()
     {
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e1) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e2) {
+
+                if (e2.getKeyCode() == KeyEvent.VK_DOWN) {
+                    MatrixGame.moveKeyboard(6, true);
+                }
+
+                if (e2.getKeyCode() == KeyEvent.VK_UP) {
+                    MatrixGame.moveKeyboard(0, true);
+                }
+
+                if (e2.getKeyCode() == KeyEvent.VK_LEFT) {
+                    MatrixGame.moveKeyboard(9, true);
+                }
+
+                if (e2.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    MatrixGame.moveKeyboard(3, true);
+                }
+                repaint();
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e2) {
+
+            }
+        });
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(TITLE);
         setResizable(false);
