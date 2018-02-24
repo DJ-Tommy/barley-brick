@@ -9,8 +9,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-//import static java.awt.Event.*;
-
 public class MainGame extends JFrame
 
 {
